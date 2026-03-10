@@ -18,19 +18,7 @@ export function SentimentMeter({
     // Use local state to animate to the provided value or simulate real-time data
     const [currentValue, setCurrentValue] = useState(value);
 
-    // For demonstration: randomly fluctuate the value slightly to simulate "real-time"
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentValue((prev) => {
-                // Random walk between -5 and +5, constrained to 0-100
-                const change = (Math.random() - 0.5) * 10;
-                const newValue = prev + change;
-                return Math.min(Math.max(newValue, 0), 100);
-            });
-        }, 2000); // Update every 2 seconds
-
-        return () => clearInterval(interval);
-    }, []);
+    // Real-time data is now driven directly by the WebSocket store via the value hook
 
     // Update if prop changes
     useEffect(() => {

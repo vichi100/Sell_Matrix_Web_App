@@ -11,8 +11,9 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { useCallStore } from "@/store/useCallStore";
 
-const data = [
+const MOCK_DATA = [
     { time: "Call Start", value: 50 },
     { time: "t1", value: 48 },
     { time: "t2", value: 55 },
@@ -106,6 +107,9 @@ const CustomizedDot = (props: any) => {
 };
 
 export function InterestTrendGraph() {
+    const liveData = useCallStore((state) => state.trendGraph);
+    const displayData = liveData.length > 0 ? liveData : MOCK_DATA;
+
     return (
         <Card className="col-span-1 border-border/50 bg-card/40 backdrop-blur-md shadow-xl overflow-hidden relative">
             <CardHeader className="flex flex-row items-center border-b border-border/20 pb-4">
@@ -118,7 +122,7 @@ export function InterestTrendGraph() {
                 <div className="h-[220px] w-full mt-4 pr-6 pb-2 pl-[-10px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
-                            data={data}
+                            data={displayData}
                             margin={{
                                 top: 20,
                                 right: 30,

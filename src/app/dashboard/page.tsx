@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import { LiveTranscript } from "@/components/LiveTranscript";
 import { InterestTrendGraph } from "@/components/InterestTrendGraph";
 import { SentimentMeter } from "@/components/SentimentMeter";
@@ -6,9 +9,39 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PhoneCall, Clock, Settings, Target } from "lucide-react";
 import { BuyerActivity } from "@/components/BuyerActivity";
+import { useCallStore } from "@/store/useCallStore";
 import Link from "next/link";
 
 export default function Dashboard() {
+    const connectSocket = useCallStore((state) => state.connectSocket);
+    const disconnectSocket = useCallStore((state) => state.disconnectSocket);
+    const startSimulation = useCallStore((state) => state.startSimulation);
+    const stopSimulation = useCallStore((state) => state.stopSimulation);
+    const customerSentiment = useCallStore((state) => state.customerSentiment);
+    const purchaseIntent = useCallStore((state) => state.purchaseIntent);
+    const isConnected = useCallStore((state) => state.isConnected);
+    const connectionError = useCallStore((state) => state.connectionError);
+
+    useEffect(() => {
+        // Automatically connect to backend telemetry when dashboard mounts
+        const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000';
+        connectSocket(socketUrl);
+
+        // To ensure the dashboard always looks alive for demo purposes,
+        // we start a local client-side heartbeat simulation that mimics backend payloads
+        const useSimulator = process.env.NEXT_PUBLIC_USE_SIMULATOR === 'true';
+        if (useSimulator) {
+            startSimulation();
+        }
+
+        return () => {
+            disconnectSocket();
+            if (useSimulator) {
+                stopSimulation();
+            }
+        };
+    }, [connectSocket, disconnectSocket, startSimulation, stopSimulation]);
+
     return (
         <div className="flex min-h-screen flex-col font-sans bg-background text-foreground">
             {/* Dashboard Header */}
@@ -18,6 +51,19 @@ export default function Dashboard() {
                         Sell Matrix
                     </Link>
                     <span className="text-sm text-muted-foreground hidden sm:inline-block px-2">/ Dashboard</span>
+                    {isConnected ? (
+                        <div className="ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-1.5 transition-all">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Live Backend Connected</span>
+                        </div>
+                    ) : (
+                        <div className="ml-2 px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 flex items-center gap-1.5" title={connectionError || "Socket Disconnected"}>
+                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                            <span className="text-xs font-medium text-red-600 dark:text-red-400 max-w-[250px] truncate">
+                                {connectionError || "Socket Disconnected"}
+                            </span>
+                        </div>
+                    )}
                 </div>
                 <div className="flex items-center gap-4">
                     <ModeToggle />
@@ -42,12 +88,12 @@ export default function Dashboard() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <SentimentMeter
-                                value={45}
+                                value={customerSentiment}
                                 title="Customer Sentiment"
                                 description="Real-time mood analysis"
                             />
                             <SentimentMeter
-                                value={82}
+                                value={purchaseIntent}
                                 title="Purchase Intent"
                                 description="Likelihood to convert"
                             />

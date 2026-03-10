@@ -8,14 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DialPad } from "@/components/DialPad";
 import { CallList } from "@/components/CallList";
+import { useCallStore } from "@/store/useCallStore";
 
 export function LiveTranscript() {
-    const transcript = [
-        { speaker: "Agent", text: "We have flexible payment options available." },
-        { speaker: "Buyer", text: "Hmm, can you tell me more about the pricing?" },
-        { speaker: "Agent", text: "Sure, I can provide a demo for you to see it in action." },
-        { speaker: "Buyer", text: "Yes, I'd like to see how it works." },
-    ];
+    const transcript = useCallStore((state) => state.transcript);
 
     return (
         <Card className="bg-card/50 shadow-sm border-border/50 overflow-hidden h-full flex flex-col relative w-full">
