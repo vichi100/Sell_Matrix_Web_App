@@ -77,10 +77,10 @@ export default function Dashboard() {
             </header>
 
             {/* Main Dashboard Content */}
-            <main className="flex-1 w-full max-w-[1600px] mx-auto p-4 flex flex-col lg:flex-row gap-6 h-[calc(100vh-4rem)] overflow-hidden">
+            <main className="flex-1 w-full max-w-[1600px] mx-auto p-2 sm:p-4 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:h-[calc(100vh-4rem)] lg:overflow-hidden h-auto overflow-y-auto">
 
                 {/* Left Column (Main Content that fits on screen) */}
-                <div className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2 pb-6">
+                <div className="flex-1 flex flex-col gap-4 lg:overflow-y-auto pr-0 lg:pr-2 pb-6">
                     {/* Top Row: Live Analytics */}
                     <div className="w-full flex flex-col gap-1">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
@@ -143,7 +143,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Right Column (Live Transcript) */}
-                <div className="w-full lg:w-[420px] flex flex-col overflow-y-auto pb-6">
+                <div className="w-full lg:w-[420px] shrink-0 flex flex-col lg:overflow-y-auto pb-6 h-[500px] lg:h-auto border-t lg:border-t-0 pt-6 lg:pt-0 border-border/20">
                     <LiveTranscript />
                 </div>
             </main>

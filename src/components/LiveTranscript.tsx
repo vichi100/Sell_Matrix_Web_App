@@ -16,7 +16,7 @@ export function LiveTranscript() {
     return (
         <Card className="bg-card/50 shadow-sm border-border/50 overflow-hidden h-full flex flex-col relative w-full">
             <CardHeader className="flex flex-col gap-4 border-b border-border/20 pb-4">
-                <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                     <div className="flex flex-col gap-2">
                         <CardTitle className="text-sm font-medium tracking-wide flex items-center gap-3">
                             Live Transcript
@@ -33,7 +33,7 @@ export function LiveTranscript() {
                             </Badge>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 self-start xl:self-auto">
                         {/* Call List Button */}
                         <Dialog>
                             <DialogTrigger asChild>
@@ -71,8 +71,8 @@ export function LiveTranscript() {
                 </div>
 
                 {/* Call Metrics Area */}
-                <div className="flex justify-start text-xs">
-                    <div className="flex bg-card/60 rounded-md border border-border/40 p-1 gap-1 w-max">
+                <div className="flex justify-start text-xs w-full overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <div className="flex bg-card/60 rounded-md border border-border/40 p-1 gap-1 w-max shrink-0">
                         <div className="flex items-center gap-2 px-4 py-1.5 bg-background/80 rounded shadow-sm">
                             <Clock className="w-4 h-4 text-blue-500" />
                             <div className="flex flex-col items-center justify-center">
