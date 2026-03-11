@@ -45,7 +45,7 @@ export default function Dashboard() {
     return (
         <div className="flex min-h-screen flex-col font-sans bg-background text-foreground">
             {/* Dashboard Header */}
-            <header className="w-full h-16 border-b border-border/40 bg-card/50 backdrop-blur sticky top-0 z-50 flex items-center justify-between px-6">
+            <header className="w-full h-16 border-b border-border/40 bg-card/50 backdrop-blur lg:sticky relative top-0 lg:z-50 flex items-center justify-between px-6">
                 <div className="flex items-center gap-4">
                     <Link href="/" className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
                         Sell Matrix
@@ -77,12 +77,12 @@ export default function Dashboard() {
             </header>
 
             {/* Main Dashboard Content */}
-            <main className="flex-1 w-full max-w-[1600px] mx-auto p-2 sm:p-4 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:h-[calc(100vh-4rem)] lg:overflow-hidden h-auto overflow-y-auto">
+            <main className="flex-1 w-full max-w-[1600px] mx-auto p-2 sm:p-4 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:h-[calc(100vh-4rem)] lg:overflow-hidden h-auto">
 
                 {/* Left Column (Main Content that fits on screen) */}
-                <div className="flex-1 flex flex-col gap-4 lg:overflow-y-auto pr-0 lg:pr-2 pb-6">
-                    {/* Top Row: Live Analytics */}
-                    <div className="w-full flex flex-col gap-1">
+                <div className="flex-1 flex flex-col gap-4 lg:overflow-y-auto pr-0 lg:pr-2 pb-6 order-2 lg:order-1">
+                    {/* Top Row: Live Analytics (Hidden on Mobile as it moves to Transcript header) */}
+                    <div className="hidden lg:flex w-full flex-col gap-1">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                             <h2 className="text-lg font-bold tracking-tight">Live Analytics</h2>
                         </div>
@@ -101,35 +101,35 @@ export default function Dashboard() {
                     </div>
 
                     {/* Interest Trend Graph */}
-                    <div className="w-full mt-1 shrink-0">
+                    <div className="w-full mt-1 shrink-0 hidden lg:block">
                         <InterestTrendGraph />
                     </div>
 
                     {/* Quick Stats & Activity (Flexible Space) */}
                     <div className="flex flex-col gap-3 mt-2 h-auto">
                         <h2 className="text-lg font-bold tracking-tight">Overview & Activity</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-3 gap-1.5 sm:gap-4">
                             <Card className="bg-card/50 shadow-sm border-border/50">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Calls Made</CardDescription>
-                                    <CardTitle className="text-2xl flex items-center gap-2">
-                                        42 <PhoneCall className="h-4 w-4 text-green-500" />
+                                <CardHeader className="p-2 sm:p-6 pb-2 sm:pb-2 items-center text-center">
+                                    <CardDescription className="text-[9px] sm:text-sm leading-tight truncate w-full">Calls Made</CardDescription>
+                                    <CardTitle className="text-sm sm:text-2xl flex items-center justify-center gap-1 sm:gap-2 mt-0.5 sm:mt-0 w-full">
+                                        42 <PhoneCall className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" />
                                     </CardTitle>
                                 </CardHeader>
                             </Card>
                             <Card className="bg-card/50 shadow-sm border-border/50">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Probability Range</CardDescription>
-                                    <CardTitle className="text-2xl flex items-center gap-2">
-                                        60-85% <Target className="h-4 w-4 text-blue-500" />
+                                <CardHeader className="p-2 sm:p-6 pb-2 sm:pb-2 items-center text-center">
+                                    <CardDescription className="text-[9px] sm:text-sm leading-tight truncate w-full" title="Probability">Probability</CardDescription>
+                                    <CardTitle className="text-sm sm:text-2xl flex items-center justify-center gap-1 sm:gap-2 mt-0.5 sm:mt-0 w-full">
+                                        60-85% <Target className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500 shrink-0" />
                                     </CardTitle>
                                 </CardHeader>
                             </Card>
                             <Card className="bg-card/50 shadow-sm border-border/50">
-                                <CardHeader className="pb-2">
-                                    <CardDescription>Talk Time</CardDescription>
-                                    <CardTitle className="text-2xl flex items-center gap-2">
-                                        2.4h <Clock className="h-4 w-4 text-orange-500" />
+                                <CardHeader className="p-2 sm:p-6 pb-2 sm:pb-2 items-center text-center">
+                                    <CardDescription className="text-[9px] sm:text-sm leading-tight truncate w-full">Talk Time</CardDescription>
+                                    <CardTitle className="text-sm sm:text-2xl flex items-center justify-center gap-1 sm:gap-2 mt-0.5 sm:mt-0 w-full">
+                                        2.4h <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500 shrink-0" />
                                     </CardTitle>
                                 </CardHeader>
                             </Card>
@@ -143,7 +143,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Right Column (Live Transcript) */}
-                <div className="w-full lg:w-[420px] shrink-0 flex flex-col lg:overflow-y-auto pb-6 h-[500px] lg:h-auto border-t lg:border-t-0 pt-6 lg:pt-0 border-border/20">
+                <div className="w-full lg:w-[420px] lg:shrink-0 flex flex-col min-h-[400px] lg:h-auto border-border/20 order-1 lg:order-2">
                     <LiveTranscript />
                 </div>
             </main>

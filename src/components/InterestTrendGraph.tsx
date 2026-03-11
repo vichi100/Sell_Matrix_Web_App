@@ -106,9 +106,34 @@ const CustomizedDot = (props: any) => {
     );
 };
 
-export function InterestTrendGraph() {
+export function InterestTrendGraph({ compact = false }: { compact?: boolean } = {}) {
     const liveData = useCallStore((state) => state.trendGraph);
     const displayData = liveData.length > 0 ? liveData : MOCK_DATA;
+
+    if (compact) {
+        return (
+            <div className="flex flex-col w-full">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground mb-1 pl-1">Interest Trend</span>
+                <div className="h-[30px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={displayData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                            <defs>
+                                <linearGradient id="lineColorCompact" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stopColor="#4ade80" />
+                                    <stop offset="30%" stopColor="#fbbf24" />
+                                    <stop offset="50%" stopColor="#f87171" />
+                                    <stop offset="70%" stopColor="#fbbf24" />
+                                    <stop offset="85%" stopColor="#4ade80" />
+                                    <stop offset="100%" stopColor="#22c55e" />
+                                </linearGradient>
+                            </defs>
+                            <Area type="monotone" dataKey="value" stroke="url(#lineColorCompact)" strokeWidth={2.5} fillOpacity={0} isAnimationActive={false} />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <Card className="col-span-1 border-border/50 bg-card/40 backdrop-blur-md shadow-xl overflow-hidden relative">
